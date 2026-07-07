@@ -58,6 +58,9 @@
     <a href="eliminar.php" class="boton">
         Eliminar Vehículo
     </a>
+    <a href="reporte.php" class="boton">
+        Reporte de Vehículos
+    </a>
 </div>
 
 </body>

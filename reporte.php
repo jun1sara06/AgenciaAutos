@@ -2,7 +2,7 @@
 
 include 'conexion.php';
 
-$sql = "SELECT * FROM vehiculos ORDER BY id_vehiculo ASC";
+$sql = "SELECT * FROM vehiculos ORDER BY numero_vehiculo ASC";
 $resultado = $conn->query($sql);
 ?>
 <!DOCTYPE html>
@@ -29,22 +29,20 @@ $resultado = $conn->query($sql);
     </style>
 </head>
 <body>
-    <h1>📋 Reporte de Vehículos</h1>
-    <p>Generado: <?php echo date('d/m/Y H:i'); ?></p>
+    <h1> Reporte de Vehículos</h1>
+    <p>Generado: <?php  
+    date_default_timezone_set('America/Merida');
+    echo date('d/m/Y H:i'); ?></p>
     
-    <a href="menu.php" class="btn">🏠 Menú Principal</a>
-    <a href="consultar.php" class="btn"> Consultar</a>
+    <a href="menu.php" class="btn"> Menú Principal</a>
     
     <table>
         <thead>
             <tr>
-                <th>ID</th>
+                <th>Número de Vehículo</th>
                 <th>Marca</th>
                 <th>Modelo</th>
                 <th>Año</th>
-                <th>Precio</th>
-                <th>Color</th>
-                <th>Kilometraje</th>
                 <th>Estado</th>
             </tr>
         </thead>
@@ -53,13 +51,10 @@ $resultado = $conn->query($sql);
             if ($resultado->num_rows > 0) {
                 while($fila = $resultado->fetch_assoc()) {
                     echo "<tr>";
-                    echo "<td>" . $fila['id_vehiculo'] . "</td>";
+                    echo "<td>" . $fila['numero_vehiculo'] . "</td>";
                     echo "<td>" . $fila['marca'] . "</td>";
                     echo "<td>" . $fila['modelo'] . "</td>";
                     echo "<td>" . $fila['anio'] . "</td>";
-                    echo "<td>$" . number_format($fila['precio'], 2) . "</td>";
-                    echo "<td>" . $fila['color'] . "</td>";
-                    echo "<td>" . number_format($fila['kilometraje'], 0) . " km</td>";
                     echo "<td>" . $fila['estado'] . "</td>";
                     echo "</tr>";
                 }
