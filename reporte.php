@@ -1,7 +1,6 @@
 <?php
 
 include 'conexion.php';
-
 $sql = "SELECT * FROM vehiculos WHERE estado = 'Rentado' ORDER BY numero_vehiculo ASC";
 $resultado = $conn->query($sql);
 ?>
