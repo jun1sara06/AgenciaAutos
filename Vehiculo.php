@@ -1,85 +1,62 @@
 <?php
-include("conexion.php");
+class Vehiculo {
+    private $conn;
 
-$mensaje = "";
+    public function __construct($conexion) {
+        $this->conn = $conexion;
+    }
 
-if(isset($_POST['eliminar'])){
+   
+    public function registrar($numero, $marca, $modelo, $anio, $estado) {
+        $stmt = $this->conn->prepare(
+            "INSERT INTO vehiculos (numero_vehiculo, marca, modelo, anio, estado) VALUES (?, ?, ?, ?, ?)"
+        );
+        $stmt->bind_param("sssis", $numero, $marca, $modelo, $anio, $estado);
 
-    $numero = $_POST['numero_vehiculo'];
-
-    $sql = "DELETE FROM vehiculos WHERE numero_vehiculo = '$numero'";
-
-    if($conn->query($sql)){
-
-        if($conn->affected_rows > 0){
-            $mensaje = "Vehículo eliminado correctamente.";
-        }else{
-            $mensaje = "No existe un vehículo con ese número.";
+        if ($stmt->execute()) {
+            $stmt->close();
+            return ["exito" => true, "mensaje" => "Vehículo registrado correctamente."];
         }
 
-    }else{
-        $mensaje = "Error: " . $conn->error;
+        $error = ($this->conn->errno == 1062)
+            ? "Ya existe un vehículo con ese número."
+            : "Error: " . $this->conn->error;
+
+        $stmt->close();
+        return ["exito" => false, "mensaje" => $error];
+    }
+
+  
+    public function consultar($numero) {
+        $stmt = $this->conn->prepare("SELECT * FROM vehiculos WHERE numero_vehiculo = ?");
+        $stmt->bind_param("s", $numero);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        $fila = $resultado->fetch_assoc(); 
+        $stmt->close();
+        return $fila;
+    }
+
+    
+    public function reporte() {
+        $sql = "SELECT * FROM vehiculos WHERE estado = 'Rentado'";
+        $resultado = $this->conn->query($sql);
+
+        $vehiculos = [];
+        while ($fila = $resultado->fetch_assoc()) {
+            $vehiculos[] = $fila;
+        }
+        return $vehiculos;
+    }
+
+  
+    public function eliminar($numero) {
+        $stmt = $this->conn->prepare("DELETE FROM vehiculos WHERE numero_vehiculo = ?");
+        $stmt->bind_param("s", $numero);
+        $stmt->execute();
+        $afectados = $stmt->affected_rows;
+        $stmt->close();
+        return $afectados > 0;
     }
 }
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dar de baja Vehículo</title>
-
-    <style>
-        body{
-            font-family: Arial, sans-serif;
-            margin: 30px;
-        }
-
-        form{
-            width: 300px;
-        }
-
-        input{
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0 15px;
-        }
-
-        input[type="submit"]{
-            background: red;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover{
-            background: red;
-        }
-
-        .mensaje{
-            margin-top:20px;
-            font-weight:bold;
-        }
-    </style>
-</head>
-
-<body>
-
-<h2>Dar de baja un vehículo</h2>
-
-<form method="POST">
-
-    Número del vehículo:
-    <input type="number" name="numero_vehiculo" required>
-
-    <input type="submit" name="eliminar" value="Eliminar Vehículo">
-
-</form>
-
-<?php
-if($mensaje != ""){
-    echo "<div class='mensaje'>$mensaje</div>";
-}
-?>
-
-</body>
-</html>
