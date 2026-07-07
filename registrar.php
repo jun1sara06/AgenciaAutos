@@ -46,6 +46,13 @@ input[type="submit"]:hover{
     margin-top:20px;
     font-weight:bold;
 }
+.regresar{
+    display:inline-block;
+    margin-top:20px;
+    text-decoration:none;
+    color:#0078D7;
+    font-weight:bold;
+}
 </style>
 </head>
 <body>
@@ -70,5 +77,8 @@ input[type="submit"]:hover{
 <?php if($mensaje != ""): ?>
     <div class="mensaje"><?= htmlspecialchars($mensaje) ?></div>
 <?php endif; ?>
+<a href="menu.php" class="regresar">
+    Volver al Menú Principal
+</a>
 </body>
 </html>

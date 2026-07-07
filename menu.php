@@ -5,53 +5,60 @@
     <title>Agencia de Autos</title>
 
     <style>
-        body{
+        body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            margin-top: 100px;
+            background: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
-        .contenedor{
-            width: 400px;
-            margin: auto;
+        .contenedor {
             background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px gray;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px gray;
+            text-align: center;
+            width: 350px;
         }
 
-        h1{
+        h1 {
             color: #333;
         }
 
-        a{
+        .boton {
             display: block;
-            margin: 15px;
-            padding: 12px;
-            text-decoration: none;
-            background-color: #0078D7;
+            background: #0078D7;
             color: white;
+            text-decoration: none;
+            padding: 12px;
+            margin: 10px 0;
             border-radius: 5px;
-            font-weight: bold;
         }
 
-        a:hover{
-            background-color: #005ea6;
+        .boton:hover {
+            background: #005ea6;
         }
     </style>
 </head>
 <body>
 
-    <div class="contenedor">
-        <h1>🚗 Agencia de Autos</h1>
+<div class="contenedor">
+    <h1> Agencia de Autos</h1>
 
-        registrar.php
+    <a href="registrar.php" class="boton">
+        Registrar Vehículo
+    </a>
 
-        consultar.php">Consultar Vehículos</a>
+    <a href="consultar.php" class="boton">
+        Consultar Vehículos
+    </a>
 
-        eliminar.phpEliminar Vehículo</a>
-    </div>
+    <a href="eliminar.php" class="boton">
+        Eliminar Vehículo
+    </a>
+</div>
 
 </body>
 </html>
