@@ -8,7 +8,7 @@ $buscado = false;
  
 if(isset($_POST['buscar'])){
     $numero = $_POST['numero'];
-    $fila = $vehiculo->consultarPorNumero($numero);
+    $fila = $vehiculo->consultar($numero);
     $buscado = true;
 }
 ?>
