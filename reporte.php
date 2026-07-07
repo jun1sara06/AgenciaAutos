@@ -2,7 +2,7 @@
 
 include 'conexion.php';
 
-$sql = "SELECT * FROM vehiculos ORDER BY id_vehiculo ASC";
+$sql = "SELECT * FROM vehiculos WHERE estado = 'Rentado' ORDER BY numero_vehiculo ASC";
 $resultado = $conn->query($sql);
 ?>
 <!DOCTYPE html>
